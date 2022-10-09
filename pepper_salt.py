@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 #read the image and store it in the image 
-image = cv2.imread("car1.png", cv2.IMREAD_UNCHANGED)
+image = cv2.imread("car2.png", cv2.IMREAD_UNCHANGED)
 
 #create a kernel to sharpen the image 
 text = [1, 1, 1, 1, 1, 1, 1, 1, 1]
@@ -17,9 +17,8 @@ image2 = image
 for y in range (0,image.shape[0]-2):
     for x in range (0,image.shape[1]-2):
             patch = image[y:y+kernel.shape[0],x:x+kernel.shape[1]]
-            outPut_sum = ((np.multiply(patch,kernel)).sum())/9
-            #the a is choosen to be 0.1 to avoid overlooded pixel
-            image2[y,x] = image[y,x]+ 0.1*(image[y,x]-outPut_sum) 
+            outPut_median = np.median(np.multiply(patch,kernel))
+            image2[y,x] = outPut_median
         
 cv2.imshow('window_name',image2)
 cv2.waitKey(0)
